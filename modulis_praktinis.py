@@ -34,7 +34,7 @@ class Uzsakymas(Base):
     id = Column(Integer, primary_key = True)
     pirkejas_id = Column("pirkejas_id", Integer, ForeignKey("pirkejas.id"))
     pirkejas = relationship("Pirkejas", back_populates = "uzsakymai")
-    preke_id = Column("preke_id", Integer, ForeignKey("preke.id"))
+    preke_id = Column("preke_id", Integer, ForeignKey("prekes.id"))
     preke = relationship("Prekes", back_populates = "prekes")
     data = Column("data", Date())
 
