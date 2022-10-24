@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/pythoncodeacademy/praktinis_db/data/internet_market_db.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure pragmas browser query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="200"/><column_width id="3" width="3416"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,8:mainpirkejas"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="pirkejas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="111"/><column index="3" value="160"/><column index="4" value="300"/><column index="5" value="178"/><column index="6" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="prekes" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="531"/><column index="3" value="145"/><column index="4" value="136"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="statusas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="187"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="uzsakymas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="1" mode="0"/></sort><column_widths><column index="1" value="82"/><column index="2" value="185"/><column index="3" value="313"/><column index="4" value="171"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="uzsakytos_prekes" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="207"/><column index="2" value="174"/><column index="3" value="130"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE pirkejas (
+	id INTEGER PRIMARY KEY NOT NULL,
+	vardas VARCHAR(100) NOT NULL,
+	pavarde VARCHAR(100) NOT NULL,
+	el_pastas VARCHAR(100) UNIQUE,
+	tel_numeris integer,
+	adresas VARCHAR(100)
+);
+
+CREATE TABLE statusas (
+	id INTEGER PRIMARY KEY NOT NULL,
+	pavadinimas VARCHAR(100)
+);
+
+CREATE TABLE prekes (
+	id INTEGER PRIMARY KEY NOT NULL,
+	pavadinimas VARCHAR(100) NOT NULL,
+	kiekis FLOAT DESIMAL(10,2),
+	kaina_eur FLOAT DESIMAL(10,2)
+);
+
+CREATE TABLE uzsakymas (
+	id INTEGER PRIMARY KEY NOT NULL,
+	pirkejas_id INTEGER NOT NULL,
+	uzsakymo_data VARCHAR(100) NOT NULL,
+	statusas_id INTEGER NOT NULL,
+	FOREIGN KEY (pirkejas_id) REFERENCES pirkejas(id),
+	FOREIGN KEY (statusas_id) REFERENCES statusas(id)
+);
+
+CREATE TABLE uzsakytos_prekes (
+	uzsakymas_id integer NOT NULL,
+	prekes_id integer NOT NULL,
+	kiekis FLOAT DESIMAL(10,2),
+	FOREIGN KEY (uzsakymas_id) REFERENCES uzsakymas(id),
+	FOREIGN KEY (prekes_id) REFERENCES prekes(id)
+);
+
+
+
+
+
+
+</sql><sql name="SQL 2">-- DROP TABLE pirkejas;
+-- DROP TABLE prekes;
+-- DROP TABLE statusas;
+
+-- DELETE from uzsakymas WHERE uzsakymas.id &gt; 23;
+
+SELECT uzsakytos_prekes.uzsakymas_id, pirkejas.pavarde, pirkejas.adresas, uzsakymo_data, sum(prekes.kaina_eur * uzsakytos_prekes.kiekis) as &quot;is_viso_eur&quot; FROM uzsakytos_prekes
+JOIN uzsakymas on uzsakymas.id = prekes_id
+JOIN prekes on prekes.id = uzsakytos_prekes.prekes_id
+JOIN pirkejas on pirkejas.id = uzsakymas.pirkejas_id
+GROUP by uzsakymo_data;
+
+SELECT * FROM uzsakymas GROUP BY pirkejas_id HAVING uzsakymo_data BETWEEN date('2022-10-21') AND date('2022-10-26');
+
+
+
+</sql><sql name="pirkejas">--          pirkejas
+-- vardas VARCHAR(100) NOT NULL,
+-- 	pavarde VARCHAR(100) NOT NULL,
+-- 	el_pastas VARCHAR(100) UNIQUE,
+-- 	tel_numeris integer,
+-- 	adresas VARCHAR(100)
+
+INSERT INTO &quot;pirkejas&quot; (&quot;vardas&quot;, &quot;pavarde&quot;, &quot;el_pastas&quot;, &quot;tel_numeris&quot;, &quot;adresas&quot;) 
+VALUES ('Sergejus', 'Bykovas', 'sergejus@gmail.com', 860090909, 'Seskine g. 0 - 00, Vilnius');
+INSERT INTO &quot;pirkejas&quot; (&quot;vardas&quot;, &quot;pavarde&quot;, &quot;el_pastas&quot;, &quot;tel_numeris&quot;, &quot;adresas&quot;) 
+VALUES ('Petras', 'Petraitis', 'petras@gmail.com', 860088889, 'Vilniaus g. 1 - 82, Vilnius');
+INSERT INTO &quot;pirkejas&quot; (&quot;vardas&quot;, &quot;pavarde&quot;, &quot;el_pastas&quot;, &quot;tel_numeris&quot;, &quot;adresas&quot;) 
+VALUES ('Antanas', 'Antanaitis', 'antanaitis@gmail.com', 860000118, 'Taures g. 3 - 7, Vilnius');
+INSERT INTO &quot;pirkejas&quot; (&quot;vardas&quot;, &quot;pavarde&quot;, &quot;el_pastas&quot;, &quot;tel_numeris&quot;, &quot;adresas&quot;) 
+VALUES ('Vardenis', 'Pavardenis', 'pavardenis@gmail.com', 861155661, 'Programuotoju g. 99 - 101, Vilnius');
+INSERT INTO &quot;pirkejas&quot; (&quot;vardas&quot;, &quot;pavarde&quot;, &quot;el_pastas&quot;, &quot;tel_numeris&quot;, &quot;adresas&quot;) 
+VALUES ('Lempinis', 'Lempanaitis', 'lempenaitis@gmail.com', 861155662, 'Upes g. 21, Vilnius');
+INSERT INTO &quot;pirkejas&quot; (&quot;vardas&quot;, &quot;pavarde&quot;, &quot;el_pastas&quot;, &quot;tel_numeris&quot;, &quot;adresas&quot;) 
+VALUES ('Antane', 'Antanaitiene', 'antanaitiene@gmail.com', 860000100, 'Taures g. 3 - 7, Vilnius');
+INSERT INTO &quot;pirkejas&quot; (&quot;vardas&quot;, &quot;pavarde&quot;, &quot;el_pastas&quot;, &quot;tel_numeris&quot;, &quot;adresas&quot;) 
+VALUES ('Vardene', 'Pavardenaite', 'pavardenaite@gmail.com', 861155677, 'Programuotoju g. 99 - 101, Vilnius');
+
+</sql><sql name="statusas">--     statusas (
+-- 	id INTEGER PRIMARY KEY NOT NULL,
+-- 	pavadinimas VARCHAR(100)
+-- 	
+INSERT INTO &quot;statusas&quot; (&quot;pavadinimas&quot;) VALUES ('patvirtintas');
+INSERT INTO &quot;statusas&quot; (&quot;pavadinimas&quot;) VALUES ('vykdomas');
+INSERT INTO &quot;statusas&quot; (&quot;pavadinimas&quot;) VALUES ('ivykditas');
+INSERT INTO &quot;statusas&quot; (&quot;pavadinimas&quot;) VALUES ('atmestas');
+INSERT INTO &quot;statusas&quot; (&quot;pavadinimas&quot;) VALUES ('prarastas');</sql><sql name="prekes">--              prekes (
+-- 	id INTEGER PRIMARY KEY NOT NULL,
+-- 	pavadinimas VARCHAR(100) NOT NULL,
+-- 	kiekis FLOAT DESIMAL(10,2),
+-- 	kaina_eur FLOAT DESIMAL(10,2)
+
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;PAPRIKU_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;AKAPULKO_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;ASTROJI_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;EGZOTISKA_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;FANU_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;GARDZIOJI_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;GURMANU_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;HAVAJU_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;MAFIJOS_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;PEPERONI_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;PROVINCIJOS_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;SALSA_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;NEAPOLIO_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;PALERMO_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;SANTA_FE_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;SICILIJOS_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;SERANO_pica_32cm&quot;, 1, 8.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;MARGARITA_pica_32cm&quot;, 1, 7.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;FIRMINE_SU_JAUTIENA_pica_42cm&quot;, 1, 12.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;FIRMINE_SU_KIAULIENA_pica_42cm&quot;, 1, 12.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;PAPRIKU_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;AKAPULKO_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;ASTROJI_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;EGZOTISKA_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;FANU_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;GARDZIOJI_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;PROVINCIJOS_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;SALSA_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;NEAPOLIO_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;PALERMO_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;SANTA_FE_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;SICILIJOS_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;SERANO_pica_42cm&quot;, 1, 11.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;Coca-Cola 2L&quot;, 1, 2.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;Spite 2L&quot;, 1, 2.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;Fanta&quot;, 1, 2.99);
+INSERT INTO &quot;prekes&quot; (&quot;pavadinimas&quot;, &quot;kiekis&quot;, &quot;kaina_eur&quot;) VALUES (&quot;Vanduo&quot;, 1, 0.99);
+
+
+
+
+
+
+</sql><sql name="uzsakymas">--                uzsakymas (
+-- 	id INTEGER PRIMARY KEY NOT NULL,
+-- 	pirkejas_id INTEGER NOT NULL,
+-- 	uzsakymo_data VARCHAR(100) NOT NULL,
+-- 	statusas_id INTEGER NOT NULL,
+-- 	FOREIGN KEY (pirkejas_id) REFERENCES pirkejas(id),
+-- 	FOREIGN KEY (statusas_id) REFERENCES statusas(id)
+
+
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (1, 3, '2022-10-07 18:34');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (2, 3, '2022-10-08 11:14');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (3, 4, '2022-10-09 00:00');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (4, 3, '2022-10-09 12:54');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (1, 3, '2022-10-14 17:02');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (5, 5, '2022-10-14 22:59');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (7, 3, '2022-10-15 10:04');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (6, 4, '2022-10-16 20:44');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (1, 3, '2022-10-18 12:34');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (2, 3, '2022-10-21 12:32');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (3, 3, '2022-10-21 20:34');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (4, 3, '2022-10-22 21:09');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (6, 3, '2022-10-22 22:30');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (5, 3, '2022-10-23 18:34');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (7, 3, '2022-10-23 08:39');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (3, 3, '2022-10-23 09:34');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (1, 3, '2022-10-24 15:22');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (2, 3, '2022-10-24 19:34');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (5, 3, '2022-10-25 17:22');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (4, 3, '2022-10-25 15:33');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (1, 3, '2022-10-25 12:34');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (7, 2, '2022-10-26 12:34');
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (3, 1, datetime('2022-10-26 13:54'));
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (2, 1, datetime('2022-10-26 14:23'));
+
+UPDATE uzsakymas SET uzsakymo_data=datetime('2022-10-07 18:47:00') WHERE uzsakymo_data='2022-10-07 18:34';
+</sql><sql name="uzsakytos_prekes">--          uzsakytos_prekes (
+-- 	uzsakymas_id integer NOT NULL,
+-- 	prekes_id integer NOT NULL,
+-- 	kiekis FLOAT DESIMAL(10,2),
+-- 	FOREIGN KEY (uzsakymas_id) REFERENCES uzsakymas(id),
+-- 	FOREIGN KEY (prekes_id) REFERENCES prekes(id)
+
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (1, 6, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (1, 11, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (1, 12, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (1, 34, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (1, 37, 1);
+
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (2, 1, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (2, 8, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (3, 23, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (4, 5, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (4, 18, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (5, 24, 3);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (5, 32, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (5, 35, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (6, 3, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (7, 35, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (7, 24, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (7, 33, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (8, 36, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (9, 27, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (10, 23, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (11, 21, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (12, 32, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (13, 28, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (14, 4, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (15, 29, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (16, 35, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (17, 26, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (18, 13, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (19, 19, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (20, 1, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (21, 3, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (22, 1, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (23, 14, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (8, 32, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (9, 21, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (10, 22, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (11, 25, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (12, 22, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (13, 12, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (14, 1, 3);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (15, 22, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (16, 31, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (17, 21, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (18, 11, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (19, 15, 1);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (20, 4, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (21, 2, 3);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (22, 33, 2);
+INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (23, 18, 1);
+
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
