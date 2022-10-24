@@ -1,1 +1,1 @@
-# praktinis_db
+# internetine parduotuve
