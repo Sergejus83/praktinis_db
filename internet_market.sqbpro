@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/pythoncodeacademy/praktinis_db/data/internet_market_db.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure pragmas browser query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="200"/><column_width id="3" width="3416"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,8:mainpirkejas"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="pirkejas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="111"/><column index="3" value="160"/><column index="4" value="300"/><column index="5" value="178"/><column index="6" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="prekes" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="531"/><column index="3" value="145"/><column index="4" value="136"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="statusas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="187"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="uzsakymas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="1" mode="0"/></sort><column_widths><column index="1" value="82"/><column index="2" value="185"/><column index="3" value="313"/><column index="4" value="171"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="uzsakytos_prekes" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="207"/><column index="2" value="174"/><column index="3" value="130"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE pirkejas (
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/pythoncodeacademy/praktinis_db/data/internet_market_db.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure pragmas browser query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="200"/><column_width id="3" width="3416"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,8:mainpirkejas"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="pirkejas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="187"/><column index="3" value="310"/><column index="4" value="300"/><column index="5" value="312"/><column index="6" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="prekes" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="531"/><column index="3" value="145"/><column index="4" value="136"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="statusas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="187"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="uzsakymas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="1" mode="0"/></sort><column_widths><column index="1" value="82"/><column index="2" value="185"/><column index="3" value="313"/><column index="4" value="171"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="uzsakytos_prekes" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="207"/><column index="2" value="174"/><column index="3" value="130"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE pirkejas (
 	id INTEGER PRIMARY KEY NOT NULL,
 	vardas VARCHAR(100) NOT NULL,
 	pavarde VARCHAR(100) NOT NULL,
@@ -45,15 +45,66 @@ CREATE TABLE uzsakytos_prekes (
 -- DROP TABLE prekes;
 -- DROP TABLE statusas;
 
--- DELETE from uzsakymas WHERE uzsakymas.id &gt; 23;
+-- DELETE from uzsakymas WHERE uzsakymas.id &gt; 23;
+
+-- visos lenteles
+SELECT * FROM pirkejas;
+SELECT * FROM statusas;
+SELECT * FROM prekes;
+SELECT * FROM uzsakymas;
+SELECT * FROM uzsakytos_prekes;
+
+-- pirkejas ir uzskymo data
+SELECT pirkejas.vardas, pirkejas.pavarde, pirkejas.adresas, uzsakymas.uzsakymo_data FROM pirkejas
+JOIN uzsakymas on pirkejas.id = uzsakymas.pirkejas_id
+ORDER by uzsakymo_data
+;
+
+-- pirkejas ir uzsakymo data pagal uzsakymo laikotarpi
+SELECT pirkejas.vardas, pirkejas.pavarde, pirkejas.adresas, uzsakymas.uzsakymo_data FROM pirkejas
+JOIN uzsakymas on pirkejas.id = uzsakymas.pirkejas_id
+GROUP BY uzsakymo_data HAVING uzsakymo_data BETWEEN datetime('2022-10-20 12:00:00') AND datetime('2022-10-26 12:00:00');
+
+-- pirkejas uzsakymas ir jo statusas
+SELECT pirkejas.vardas, pirkejas.pavarde, pirkejas.adresas, uzsakymas.uzsakymo_data, statusas.pavadinimas as &quot;uzsakymo statusas&quot; FROM pirkejas
+JOIN uzsakymas on pirkejas.id = uzsakymas.pirkejas_id 
+JOIN statusas on uzsakymas.statusas_id = statusas.id 
+ORDER by uzsakymo_data
+;
+
+-- pirkejas uzsakymas ir pagal statusa
+SELECT pirkejas.vardas, pirkejas.pavarde, pirkejas.adresas, uzsakymas.uzsakymo_data, statusas.pavadinimas as &quot;uzsakymo statusas&quot; FROM pirkejas
+JOIN uzsakymas on pirkejas.id = uzsakymas.pirkejas_id 
+JOIN statusas on uzsakymas.statusas_id = statusas.id WHERE statusas_id = 4 or statusas_id = 5
+ORDER by uzsakymo_data
+;
+
+-- uzsakymai pagal pavadinima
+SELECT prekes.pavadinimas, uzsakytos_prekes.kiekis  FROM uzsakytos_prekes
+JOIN prekes on uzsakytos_prekes.prekes_id = prekes.id
+GROUP by pavadinimas
+;
+
+-- polpuliarausia preke
+SELECT prekes.pavadinimas as &quot;populiariausia pica&quot;, uzsakytos_prekes.kiekis , prekes.kaina_eur as &quot;kaina uz vnt_eur&quot; FROM uzsakytos_prekes
+JOIN prekes on uzsakytos_prekes.prekes_id = prekes.id WHERE uzsakytos_prekes.kiekis &gt; 2
+GROUP by pavadinimas
+;
+
+
+-- is viso parduota ir sumoketa
+SELECT count(*) as &quot;iv viso uzsakyta prekiu vnt&quot;, sum(uzsakytos_prekes.kiekis * prekes.kaina_eur ) as &quot;is viso sumoketa&quot; from uzsakytos_prekes
+JOIN prekes on uzsakytos_prekes.prekes_id = prekes.id 
+;
+
+
+-- pagal uzsakymo data rodo pirkeja ir isleista suma
+SELECT uzsakymo_data, pirkejas.vardas, pirkejas.pavarde, pirkejas.adresas, uzsakytos_prekes.uzsakymas_id, sum(prekes.kaina_eur * uzsakytos_prekes.kiekis) as &quot;is_viso_eur&quot; FROM uzsakytos_prekes
+JOIN uzsakymas on uzsakymas.id = prekes_id
+JOIN prekes on prekes.id = uzsakytos_prekes.prekes_id
+JOIN pirkejas on pirkejas.id = uzsakymas.pirkejas_id
+GROUP by uzsakymo_data;
 
-SELECT uzsakytos_prekes.uzsakymas_id, pirkejas.pavarde, pirkejas.adresas, uzsakymo_data, sum(prekes.kaina_eur * uzsakytos_prekes.kiekis) as &quot;is_viso_eur&quot; FROM uzsakytos_prekes
-JOIN uzsakymas on uzsakymas.id = prekes_id
-JOIN prekes on prekes.id = uzsakytos_prekes.prekes_id
-JOIN pirkejas on pirkejas.id = uzsakymas.pirkejas_id
-GROUP by uzsakymo_data;
-
-SELECT * FROM uzsakymas GROUP BY pirkejas_id HAVING uzsakymo_data BETWEEN date('2022-10-21') AND date('2022-10-26');
 
 
 
@@ -166,11 +217,16 @@ INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&qu
 INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (5, 3, '2022-10-25 17:22');
 INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (4, 3, '2022-10-25 15:33');
 INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (1, 3, '2022-10-25 12:34');
-INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (7, 2, '2022-10-26 12:34');
-INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (3, 1, datetime('2022-10-26 13:54'));
-INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (2, 1, datetime('2022-10-26 14:23'));
+INSERT INTO &quot;uzsakymas&quot; (&quot;pirkejas_id&quot;, &quot;statusas_id&quot;, &quot;uzsakymo_data&quot; ) VALUES (7, 2, '2022-10-26 12:34');
+
+UPDATE uzsakymas SET uzsakymo_data=datetime('2022-10-07 18:47:00') WHERE uzsakymo_data='2022-10-07 18:34';
+
+UPDATE uzsakymas SET uzsakymo_data=datetime(uzsakymo_data) WHERE uzsakymo_data=uzsakymo_data;
+
+
+
+
 
-UPDATE uzsakymas SET uzsakymo_data=datetime('2022-10-07 18:47:00') WHERE uzsakymo_data='2022-10-07 18:34';
 </sql><sql name="uzsakytos_prekes">--          uzsakytos_prekes (
 -- 	uzsakymas_id integer NOT NULL,
 -- 	prekes_id integer NOT NULL,
@@ -230,4 +286,4 @@ INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes
 INSERT INTO &quot;uzsakytos_prekes&quot; (&quot;uzsakymas_id&quot;, &quot;prekes_id&quot;, &quot;kiekis&quot;) VALUES (23, 18, 1);
 
 
-</sql><current_tab id="0"/></tab_sql></sqlb_project>
+</sql><current_tab id="1"/></tab_sql></sqlb_project>
